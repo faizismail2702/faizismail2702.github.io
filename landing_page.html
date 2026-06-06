@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trackora Financial — Web App Keuangan Personal, Database di Google Drive Kamu</title>
+  <meta name="description" content="Trackora Financial adalah Web App Personal Finance pertama di Indonesia yang berjalan langsung di Google Sheets kamu sendiri. UI modern, data 100% privat, 1x bayar untuk selamanya." />
+
+  <!-- =============================================
+       GOOGLE FONTS
+       Instrument Serif  → judul display besar (italic accent)
+       Plus Jakarta Sans → body & UI
+       ============================================= -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- =============================================
+       TAILWIND CSS — Pre-built production file
+       Source: src/input.css  •  Config: tailwind.config.js
+       Rebuild: yarn build (lihat README.md)
+       ============================================= -->
+  <link rel="stylesheet" href="./tailwind.css" />
+
+  <!-- =============================================
+       CHART.JS via CDN — untuk grafik di mockup hero
+       ============================================= -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- =============================================
+       FONT AWESOME via CDN
+       ============================================= -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+</head>
+
+<body class="overflow-x-hidden">
+
+<!-- ============================================================
+     HEADER / NAVBAR  (LIGHT)
+     ============================================================ -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 py-4 px-4 md:px-0">
+  <nav class="max-w-6xl mx-auto flex items-center justify-between">
+
+    <!-- Logo (SVG) -->
+    <a href="#" class="flex items-center gap-2.5">
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0">
+        <rect width="40" height="40" rx="10" fill="#0D9488"/>
+        <path d="M11 14h18M11 19h12M11 24h15M11 29h9" stroke="#5EEAD4" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="29" cy="29" r="3" fill="#5EEAD4"/>
+      </svg>
+      <span class="font-display font-extrabold text-lg tracking-tight">
+        <span class="text-slate-900">Trackora</span><span class="text-brand-600"> Financial</span>
+      </span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600">
+      <li><a href="#tentang"   class="nav-link hover:text-brand-700 transition-colors duration-200">Tentang</a></li>
+      <li><a href="#komparasi" class="nav-link hover:text-brand-700 transition-colors duration-200">Keunggulan</a></li>
+      <li><a href="#fitur"     class="nav-link hover:text-brand-700 transition-colors duration-200">Fitur</a></li>
+      <li><a href="#harga"     class="nav-link hover:text-brand-700 transition-colors duration-200">Harga</a></li>
+      <li><a href="#testimoni" class="nav-link hover:text-brand-700 transition-colors duration-200">Testimoni</a></li>
+      <li><a href="#qa"        class="nav-link hover:text-brand-700 transition-colors duration-200">Q&amp;A</a></li>
+    </ul>
+
+    <!-- Desktop CTA -->
+    <div class="hidden md:flex items-center gap-3">
+      <a href="#harga" class="btn-ghost-light text-sm font-semibold px-4 py-2 rounded-xl">Lihat Paket</a>
+      <a href="#beli"  class="btn-primary text-sm font-bold px-5 py-2.5 rounded-xl">
+        Mulai Sekarang <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+      </a>
+    </div>
+
+    <!-- Hamburger (Mobile) -->
+    <button id="hamburger" aria-label="Buka menu" aria-expanded="false"
+            class="md:hidden text-slate-700 hover:text-brand-700 transition-colors p-2">
+      <i class="fa-solid fa-bars text-lg"></i>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu">
+    <div class="card mt-3 max-w-6xl mx-auto p-5 flex flex-col gap-3">
+      <a href="#tentang"   class="text-slate-700 hover:text-brand-700 font-medium py-1.5 transition-colors" onclick="closeMobile()">Tentang</a>
+      <a href="#komparasi" class="text-slate-700 hover:text-brand-700 font-medium py-1.5 transition-colors" onclick="closeMobile()">Keunggulan</a>
+      <a href="#fitur"     class="text-slate-700 hover:text-brand-700 font-medium py-1.5 transition-colors" onclick="closeMobile()">Fitur</a>
+      <a href="#harga"     class="text-slate-700 hover:text-brand-700 font-medium py-1.5 transition-colors" onclick="closeMobile()">Harga</a>
+      <a href="#testimoni" class="text-slate-700 hover:text-brand-700 font-medium py-1.5 transition-colors" onclick="closeMobile()">Testimoni</a>
+      <a href="#qa"        class="text-slate-700 hover:text-brand-700 font-medium py-1.5 transition-colors" onclick="closeMobile()">Q&amp;A</a>
+      <div class="divider-soft my-1"></div>
+      <a href="#beli" class="btn-primary text-sm font-bold py-3.5 rounded-xl text-center" onclick="closeMobile()">
+        Mulai Sekarang <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<!-- /NAVBAR -->
+
+
+<!-- ============================================================
+     HERO SECTION  (LIGHT — split 2 columns)
+     ============================================================ -->
+<section class="hero-bg relative min-h-screen flex items-center pt-24 overflow-hidden">
+
+  <!-- Decorative blobs -->
+  <div class="blob blob-mint w-[420px] h-[420px] -top-24 -left-32"></div>
+  <div class="blob blob-cyan w-[520px] h-[520px] -top-32 -right-32"></div>
+  <div class="blob blob-teal w-[280px] h-[280px] bottom-10 left-1/3"></div>
+
+  <div class="max-w-6xl mx-auto px-4 w-full py-20 md:py-28 relative z-10">
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+
+      <!-- LEFT: Copy -->
+      <div class="reveal">
+        <!-- Badge -->
+        <div class="pill pill-white mb-7 live-dot">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-500 flex-shrink-0"></span>
+          <span class="text-[0.7rem] tracking-widest uppercase">🚀 Powered by Google Sheets</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="font-display text-4xl md:text-5xl lg:text-[3.4rem] font-extrabold leading-[1.08] text-slate-900 mb-6 tracking-tight">
+          Kelola Keuangan Layaknya CFO Pribadi —<br class="hidden md:block"/>
+          Dengan <span class="accent-italic text-[1.05em]">Personal Finance.</span><br class="hidden md:block"/>
+          Web App Modern di Drive-mu
+        </h1>
+
+        <!-- Sub -->
+        <p class="text-slate-600 text-lg leading-relaxed mb-8 max-w-lg">
+          Trackora bukan template spreadsheet biasa, dan bukan aplikasi berlangganan mahal.
+          Ini Web App Personal Finance yang berjalan langsung di
+          <strong class="text-slate-900 font-semibold">Google Sheets kamu sendiri</strong> —
+          antarmuka modern, data tersimpan 100% privat di Google Drive milikmu.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-3 mb-6">
+          <a href="#beli" class="btn-primary font-bold px-7 py-3.5 rounded-xl inline-flex items-center gap-2.5 text-sm">
+            Mulai Sekarang <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+          <a href="#fitur" class="btn-secondary font-semibold px-7 py-3.5 rounded-xl inline-flex items-center gap-2.5 text-sm">
+            <i class="fa-solid fa-play text-brand-600 text-[0.7rem]"></i> Lihat Demo
+          </a>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-500 font-medium">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-brand-600"></i> No Subscription</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-brand-600"></i> Secure &amp; Private</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-brand-600"></i> Setup &lt; 10 menit</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Mockup (browser frame + dashboard) -->
+      <div class="reveal flex justify-center md:justify-end">
+        <div class="relative w-full max-w-[480px]">
+
+          <!-- Soft glow under mockup -->
+          <div class="absolute -inset-6 bg-brand-300/30 rounded-[2rem] blur-3xl"></div>
+
+          <!-- Browser frame -->
+          <div class="browser-frame relative z-10 overflow-hidden">
+            <!-- Browser top bar -->
+            <div class="flex items-center gap-1.5 px-3 py-2.5 border-b border-slate-200 bg-slate-50">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-300"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-300"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span>
+              <div class="mx-auto flex items-center gap-2 bg-white border border-slate-200 px-3 py-1 rounded-md text-[0.65rem] text-slate-500">
+                <i class="fa-solid fa-lock text-brand-500 text-[0.6rem]"></i>
+                <span>app.trackora.id/dashboard</span>
+              </div>
+            </div>
+
+            <!-- Dashboard content -->
+            <div class="p-4 bg-white">
+              <!-- Header row -->
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <p class="text-[0.65rem] text-slate-400 uppercase tracking-wider font-semibold">Net Worth</p>
+                  <p class="font-display text-xl font-extrabold text-slate-900">Rp 128.450.000</p>
+                </div>
+                <div class="pill pill-mint text-[0.6rem]">
+                  <i class="fa-solid fa-arrow-trend-up text-[0.55rem]"></i>
+                  +12.4% MoM
+                </div>
+              </div>
+
+              <!-- Mini stat cards -->
+              <div class="grid grid-cols-3 gap-2 mb-4">
+                <div class="rounded-xl p-2.5 bg-emerald-50 border border-emerald-100">
+                  <p class="text-[0.55rem] text-emerald-700 font-semibold uppercase tracking-wider">Income</p>
+                  <p class="text-[0.78rem] font-bold text-slate-900 mt-0.5">Rp 18,2 Jt</p>
+                </div>
+                <div class="rounded-xl p-2.5 bg-rose-50 border border-rose-100">
+                  <p class="text-[0.55rem] text-rose-700 font-semibold uppercase tracking-wider">Expense</p>
+                  <p class="text-[0.78rem] font-bold text-slate-900 mt-0.5">Rp 11,4 Jt</p>
+                </div>
+                <div class="rounded-xl p-2.5 bg-teal-50 border border-teal-100">
+                  <p class="text-[0.55rem] text-teal-700 font-semibold uppercase tracking-wider">Savings</p>
+                  <p class="text-[0.78rem] font-bold text-slate-900 mt-0.5">Rp 6,8 Jt</p>
+                </div>
+              </div>
+
+              <!-- Chart area -->
+              <div class="rounded-xl border border-slate-200 p-3 mb-3">
+                <div class="flex items-center justify-between mb-2">
+                  <p class="text-[0.65rem] text-slate-500 font-semibold uppercase tracking-wider">Cash Flow · Last 6 months</p>
+                  <span class="text-[0.55rem] text-slate-400">2026</span>
+                </div>
+                <canvas id="heroChart" height="80"></canvas>
+              </div>
+
+              <!-- Tiny txn list -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between text-[0.68rem]">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-md bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fa-solid fa-bowl-food text-[0.55rem]"></i></span>
+                    <span class="text-slate-700 font-medium">Makan siang</span>
+                  </div>
+                  <span class="text-rose-600 font-semibold">- Rp 45rb</span>
+                </div>
+                <div class="flex items-center justify-between text-[0.68rem]">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fa-solid fa-briefcase text-[0.55rem]"></i></span>
+                    <span class="text-slate-700 font-medium">Gaji bulanan</span>
+                  </div>
+                  <span class="text-emerald-600 font-semibold">+ Rp 14,5 Jt</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating card: Kekayaan Bersih -->
+          <div class="float-card absolute -bottom-5 -left-6 card !rounded-2xl !p-3 flex items-center gap-3 z-20" style="min-width:180px">
+            <div class="w-10 h-10 rounded-xl icon-ring flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-wallet text-sm"></i>
+            </div>
+            <div>
+              <div class="text-slate-900 text-sm font-bold">Rp 128,4 Jt</div>
+              <div class="text-slate-500 text-[0.65rem]">Kekayaan Bersih</div>
+            </div>
+          </div>
+
+          <!-- Floating card: Budget Aman -->
+          <div class="float-card-slow absolute -top-4 -right-4 card !rounded-2xl !p-3 flex items-center gap-3 z-20" style="min-width:170px">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-circle-check text-sm"></i>
+            </div>
+            <div>
+              <div class="text-slate-900 text-sm font-bold">Budget Aman</div>
+              <div class="text-slate-500 text-[0.65rem]">Maret · Sisa 42%</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Brand strip (logos line) -->
+    <div class="mt-20 reveal">
+      <p class="text-center text-[0.7rem] uppercase tracking-[0.2em] text-slate-400 font-semibold mb-5">
+        Dirancang untuk pengguna Google ecosystem
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 opacity-70">
+        <span class="flex items-center gap-2 text-slate-500 font-semibold text-sm"><i class="fa-brands fa-google text-base"></i> Google Sheets</span>
+        <span class="flex items-center gap-2 text-slate-500 font-semibold text-sm"><i class="fa-brands fa-google-drive text-base"></i> Google Drive</span>
+        <span class="flex items-center gap-2 text-slate-500 font-semibold text-sm"><i class="fa-solid fa-code text-base"></i> Apps Script</span>
+        <span class="flex items-center gap-2 text-slate-500 font-semibold text-sm"><i class="fa-brands fa-chrome text-base"></i> Chrome &amp; Safari</span>
+        <span class="flex items-center gap-2 text-slate-500 font-semibold text-sm"><i class="fa-solid fa-mobile-screen text-base"></i> PWA Ready</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- /HERO -->
+
+
+<!-- ============================================================
+     SECTION: TENTANG TRACKORA FINANCIAL  (LIGHT)
+     ============================================================ -->
+<section id="tentang" class="py-24 bg-white relative">
+  <div class="max-w-6xl mx-auto px-4">
+
+    <div class="text-center mb-16 reveal">
+      <span class="pill pill-mint mb-4">
+        <i class="fa-solid fa-sparkles text-[0.7rem]"></i> Apa itu Trackora?
+      </span>
+      <h2 class="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight mt-3">
+        Bukan Template. Bukan Aplikasi Mahal.<br/>
+        <span class="accent-italic text-[1.1em]">Ini Kategori Tersendiri.</span>
+      </h2>
+      <p class="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed">
+        Trackora adalah <strong class="text-slate-900">Web App Personal Finance</strong> yang secara unik menggunakan
+        Google Sheets kamu sebagai database pribadi — bukan sebagai antarmuka.
+        Kamu berinteraksi dengan Web App yang bersih dan modern, sementara seluruh datamu tersimpan
+        aman di Google Drive milikmu sendiri.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- Left: How it works -->
+      <div class="reveal">
+        <h3 class="font-display text-2xl md:text-[1.7rem] font-bold text-slate-900 mb-5 leading-tight">
+          Web App yang <span class="accent-italic text-[1.05em]">menghormati privasi</span> data kamu
+        </h3>
+        <p class="text-slate-600 leading-relaxed mb-6">
+          Saat kamu membeli Trackora, kamu mendeploy script ke akun Google kamu sendiri —
+          hanya butuh beberapa klik. Hasilnya? Web App personal finance yang berjalan di bawah
+          akun Google-mu, dengan data yang tidak pernah menyentuh server kami.
+        </p>
+        <ul class="space-y-3.5">
+          <li class="flex items-start gap-3 text-slate-700 text-sm">
+            <i class="fa-solid fa-circle-check text-brand-600 mt-0.5 flex-shrink-0"></i>
+            <span><strong class="text-slate-900">Antarmuka modern</strong> — kamu tidak pernah melihat baris-dan-kolom spreadsheet yang membosankan</span>
+          </li>
+          <li class="flex items-start gap-3 text-slate-700 text-sm">
+            <i class="fa-solid fa-circle-check text-brand-600 mt-0.5 flex-shrink-0"></i>
+            <span><strong class="text-slate-900">Data di Google Drive kamu sendiri</strong> — kami tidak menyimpan satu byte pun data keuanganmu</span>
+          </li>
+          <li class="flex items-start gap-3 text-slate-700 text-sm">
+            <i class="fa-solid fa-circle-check text-brand-600 mt-0.5 flex-shrink-0"></i>
+            <span><strong class="text-slate-900">1x bayar, akses selamanya</strong> — tidak ada biaya langganan bulanan yang membebani</span>
+          </li>
+          <li class="flex items-start gap-3 text-slate-700 text-sm">
+            <i class="fa-solid fa-circle-check text-brand-600 mt-0.5 flex-shrink-0"></i>
+            <span><strong class="text-slate-900">Laporan otomatis</strong> — Net Worth, Arus Kas, dan Tren pengeluaran tanpa rumus manual</span>
+          </li>
+          <li class="flex items-start gap-3 text-slate-700 text-sm">
+            <i class="fa-solid fa-circle-check text-brand-600 mt-0.5 flex-shrink-0"></i>
+            <span><strong class="text-slate-900">Metodologi Double-Entry</strong> — tidak ada kebocoran pencatatan, neraca selalu seimbang</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: 4 Pillars -->
+      <div class="grid grid-cols-2 gap-4 reveal">
+
+        <div class="card p-5">
+          <div class="icon-ring w-11 h-11 rounded-xl flex items-center justify-center mb-4">
+            <i class="fa-brands fa-google-drive"></i>
+          </div>
+          <h4 class="text-slate-900 font-semibold text-sm mb-1.5">Database Privat</h4>
+          <p class="text-slate-500 text-xs leading-relaxed">Data tersimpan di Google Drive-mu. Bukan di server kami.</p>
+        </div>
+
+        <div class="card p-5">
+          <div class="icon-ring w-11 h-11 rounded-xl flex items-center justify-center mb-4">
+            <i class="fa-solid fa-window-maximize"></i>
+          </div>
+          <h4 class="text-slate-900 font-semibold text-sm mb-1.5">UI Web App Modern</h4>
+          <p class="text-slate-500 text-xs leading-relaxed">Antarmuka bersih. Tidak ada tampilan sel spreadsheet sama sekali.</p>
+        </div>
+
+        <div class="card p-5">
+          <div class="icon-ring w-11 h-11 rounded-xl flex items-center justify-center mb-4">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <h4 class="text-slate-900 font-semibold text-sm mb-1.5">Double-Entry Personal</h4>
+          <p class="text-slate-500 text-xs leading-relaxed">Metodologi akuntansi yang diadaptasi untuk keuangan pribadi.</p>
+        </div>
+
+        <div class="card p-5">
+          <div class="icon-ring w-11 h-11 rounded-xl flex items-center justify-center mb-4">
+            <i class="fa-solid fa-infinity"></i>
+          </div>
+          <h4 class="text-slate-900 font-semibold text-sm mb-1.5">1x Bayar, Selamanya</h4>
+          <p class="text-slate-500 text-xs leading-relaxed">Beli sekali, gunakan tanpa batas. Tidak ada tagihan bulanan.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- /TENTANG -->
+
+
+<!-- ============================================================
+     SECTION: KOMPARASI — 3 VERTICAL CARDS (BAD vs TRACKORA)
+     ============================================================ -->
+<section id="komparasi" class="py-24 bg-soft relative overflow-hidden">
+
+  <!-- subtle blobs -->
+  <div class="blob blob-mint w-[360px] h-[360px] -top-20 -right-20"></div>
+  <div class="blob blob-cyan w-[300px] h-[300px] -bottom-20 -left-20"></div>
+
+  <div class="max-w-6xl mx-auto px-4 relative z-10">
+
+    <div class="text-center mb-14 reveal">
+      <span class="pill pill-mint mb-4">
+        <i class="fa-solid fa-trophy text-[0.7rem]"></i> Posisi di Pasar
+      </span>
+      <h2 class="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight mt-3">
+        Trackora vs. Pilihan Lain —<br/>
+        <span class="accent-italic text-[1.1em]">tidak ada yang setara</span>
+      </h2>
+      <p class="text-slate-600 max-w-xl mx-auto leading-relaxed">
+        Kebanyakan orang harus memilih antara <em>privasi</em> atau <em>kemudahan</em>.
+        Trackora menghadirkan keduanya sekaligus, dengan harga yang masuk akal.
+      </p>
+    </div>
+
+    <!-- 3 Vertical Comparison Cards -->
+    <div class="grid md:grid-cols-3 gap-6 reveal">
+
+      <!-- ============== CARD 1: Aplikasi SaaS vs Trackora ============== -->
+      <div class="comp-card">
+        <!-- TOP HALF: Aplikasi SaaS (Cara Lama) -->
+        <div class="top-half">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-11 h-11 rounded-xl icon-ring-gray flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-mobile-screen text-base"></i>
+            </div>
+            <div>
+              <p class="text-slate-700 font-bold text-base">Aplikasi SaaS</p>
+              <p class="text-slate-400 text-xs">(Money Manager, Mint, dll)</p>
+            </div>
+          </div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Bayar berlangganan tiap bulan/tahun
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Data tersimpan di server pihak ketiga
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Jika tutup / berhenti, data hilang
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Privasi bergantung kebijakan mereka
+            </li>
+          </ul>
+        </div>
+
+        <!-- VS DIVIDER -->
+        <div class="vs-divider relative">
+          <span class="vs-pill">VS</span>
+        </div>
+
+        <!-- BOTTOM HALF: Trackora Pro -->
+        <div class="bottom-half">
+          <div class="flex items-center gap-3 mb-4 mt-1">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#0d9488">
+              <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 14h18M11 19h12M11 24h15M11 29h9" stroke="#5EEAD4" stroke-width="2.4" stroke-linecap="round"/>
+                <circle cx="29" cy="29" r="3" fill="#5EEAD4"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-slate-900 font-bold text-base">Trackora Pro</p>
+              <p class="text-brand-700 text-xs font-semibold">Web App + Google Sheets</p>
+            </div>
+          </div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span><strong class="text-slate-900">1x bayar, selamanya</strong></span>
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span>Data 100% di <strong class="text-slate-900">GDrive-mu</strong></span>
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span>Data tidak akan pernah hilang</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span>Kamu pemilik penuh datamu sendiri</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============== CARD 2: Spreadsheet Biasa vs Trackora ============== -->
+      <div class="comp-card">
+        <div class="top-half">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-11 h-11 rounded-xl icon-ring-gray flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-table-cells text-base"></i>
+            </div>
+            <div>
+              <p class="text-slate-700 font-bold text-base">Spreadsheet Biasa</p>
+              <p class="text-slate-400 text-xs">(Excel / Google Sheets template)</p>
+            </div>
+          </div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Input manual, rawan rumus pecah
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Tampilan baris-kolom membosankan
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Tidak ada otomasi laporan
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Sulit dipakai di HP / kurang ramah
+            </li>
+          </ul>
+        </div>
+
+        <div class="vs-divider relative">
+          <span class="vs-pill">VS</span>
+        </div>
+
+        <div class="bottom-half">
+          <div class="flex items-center gap-3 mb-4 mt-1">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#0d9488">
+              <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 14h18M11 19h12M11 24h15M11 29h9" stroke="#5EEAD4" stroke-width="2.4" stroke-linecap="round"/>
+                <circle cx="29" cy="29" r="3" fill="#5EEAD4"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-slate-900 font-bold text-base">Trackora Pro</p>
+              <p class="text-brand-700 text-xs font-semibold">Web App + Google Sheets</p>
+            </div>
+          </div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span><strong class="text-slate-900">Input otomatis</strong>, tanpa edit rumus</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span>UI Web App modern &amp; bersih</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span>Laporan otomatis real-time</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span>Responsif: PC, Tablet, HP</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============== CARD 3: Buku Tulis vs Trackora ============== -->
+      <div class="comp-card">
+        <div class="top-half">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-11 h-11 rounded-xl icon-ring-gray flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-book text-base"></i>
+            </div>
+            <div>
+              <p class="text-slate-700 font-bold text-base">Buku Tulis</p>
+              <p class="text-slate-400 text-xs">(Catat manual di kertas)</p>
+            </div>
+          </div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Rawan hilang &amp; rusak fisik
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Tidak ada kalkulasi otomatis
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Sulit melihat tren jangka panjang
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-500">
+              <i class="fa-solid fa-xmark text-slate-400 mt-0.5 flex-shrink-0 text-xs"></i>
+              Mustahil sinkron dengan HP
+            </li>
+          </ul>
+        </div>
+
+        <div class="vs-divider relative">
+          <span class="vs-pill">VS</span>
+        </div>
+
+        <div class="bottom-half">
+          <div class="flex items-center gap-3 mb-4 mt-1">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#0d9488">
+              <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 14h18M11 19h12M11 24h15M11 29h9" stroke="#5EEAD4" stroke-width="2.4" stroke-linecap="round"/>
+                <circle cx="29" cy="29" r="3" fill="#5EEAD4"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-slate-900 font-bold text-base">Trackora Pro</p>
+              <p class="text-brand-700 text-xs font-semibold">Web App + Google Sheets</p>
+            </div>
+          </div>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span><strong class="text-slate-900">Cloud-backed</strong> — tersimpan di GDrive</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span>Kalkulasi otomatis &amp; akurat</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span>Grafik &amp; tren keuangan tahunan</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-[0.82rem] text-slate-700">
+              <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+              <span>Akses di mana saja, kapan saja</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA below comparison -->
+    <div class="text-center mt-12 reveal">
+      <a href="#harga" class="btn-primary font-bold px-7 py-3.5 rounded-xl inline-flex items-center gap-2.5 text-sm">
+        Lihat Paket Trackora <i class="fa-solid fa-arrow-right text-xs"></i>
+      </a>
+      <p class="text-slate-500 text-xs mt-3"><i class="fa-solid fa-shield-halved text-brand-600 mr-1"></i> Garansi 7 hari uang kembali — tanpa pertanyaan</p>
+    </div>
+
+  </div>
+</section>
+<!-- /KOMPARASI -->
+
+
+<!-- ============================================================
+     SECTION: FITUR — INTERACTIVE CAROUSEL (LIGHT)
+     ============================================================ -->
+<section id="fitur" class="py-24 bg-white relative overflow-hidden">
+
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-14 reveal">
+      <span class="pill pill-mint mb-4">
+        <i class="fa-solid fa-layer-group text-[0.7rem]"></i> Fitur Trackora Web App
+      </span>
+      <h2 class="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight mt-3">
+        Semua yang Kamu Butuhkan,<br/>
+        <span class="accent-italic text-[1.1em]">satu platform terintegrasi</span>
+      </h2>
+      <p class="text-slate-600 max-w-xl mx-auto leading-relaxed">
+        Setiap fitur dirancang khusus untuk personal finance Indonesia.
+        Geser atau klik panah untuk menjelajahi semua fitur.
+      </p>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-4 reveal">
+    <div class="card overflow-hidden !rounded-3xl">
+
+      <div class="flex flex-col lg:flex-row min-h-[540px]">
+
+        <!-- LEFT: tab pills -->
+        <nav id="feat-tabs" class="lg:w-[260px] flex-shrink-0 flex lg:flex-col overflow-x-auto lg:overflow-x-visible border-b lg:border-b-0 lg:border-r border-slate-200 bg-soft p-3 gap-1.5 lg:p-4 lg:gap-2">
+          <!-- Injected by JS -->
+        </nav>
+
+        <!-- RIGHT: content -->
+        <div class="flex-1 flex flex-col">
+          <div id="feat-img-wrap" class="relative bg-mint flex items-center justify-center overflow-hidden" style="height:300px;">
+            <!-- Image transitions here via JS -->
+          </div>
+          <div id="feat-text" class="p-7 lg:p-8 flex flex-col justify-between flex-1 border-t border-slate-200 bg-white">
+            <!-- Text injected by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="flex items-center justify-between px-5 py-3 border-t border-slate-200 bg-soft">
+        <button id="feat-prev" aria-label="Fitur sebelumnya"
+          class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-brand-700 hover:border-brand-400 transition-all active:scale-90">
+          <i class="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+        <div id="feat-dots" class="flex items-center gap-2"></div>
+        <button id="feat-next" aria-label="Fitur berikutnya"
+          class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-brand-700 hover:border-brand-400 transition-all active:scale-90">
+          <i class="fa-solid fa-chevron-right text-xs"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+<!-- /FITUR CAROUSEL -->
+
+
+<!-- ============================================================
+     SECTION: DEVICE MOCKUP  (LIGHT)
+     ============================================================ -->
+<section id="tampilan" class="py-24 bg-soft relative overflow-hidden">
+
+  <div class="blob blob-mint w-[320px] h-[320px] -top-16 left-10"></div>
+  <div class="blob blob-cyan w-[360px] h-[360px] -bottom-20 right-0"></div>
+
+  <div class="max-w-6xl mx-auto px-4 relative z-10">
+
+    <div class="text-center mb-16 reveal">
+      <span class="pill pill-mint mb-4">
+        <i class="fa-solid fa-display text-[0.7rem]"></i> Tersedia di Semua Perangkat
+      </span>
+      <h2 class="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight mt-3">
+        Buka di Mana Saja,<br/>
+        <span class="accent-italic text-[1.1em]">tampil sempurna di semua layar</span>
+      </h2>
+      <p class="text-slate-600 max-w-xl mx-auto leading-relaxed">
+        Trackora dirancang responsif — dari monitor besar di kantor sampai HP kamu saat
+        di perjalanan, semua pengalaman terasa mulus dan nyaman.
+      </p>
+    </div>
+
+    <div class="flex flex-col items-center gap-10">
+
+      <!-- DESKTOP -->
+      <div class="reveal w-full max-w-4xl">
+        <div class="relative">
+          <div class="rounded-2xl bg-white border border-slate-200 p-2 shadow-xl" style="box-shadow: 0 24px 60px rgba(15,23,42,0.10), 0 0 0 1px rgba(20,184,166,0.08);">
+            <div class="flex items-center gap-1.5 px-3 py-2 bg-slate-50 rounded-t-xl border-b border-slate-200 mb-0">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-300"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-300"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span>
+              <div class="mx-auto flex items-center gap-2 bg-white border border-slate-200 px-4 py-1 rounded-md text-xs text-slate-500 flex-1 max-w-xs">
+                <i class="fa-solid fa-lock text-brand-500 text-xs"></i>
+                <span>app.trackora.id</span>
+              </div>
+            </div>
+            <div class="rounded-b-xl overflow-hidden bg-mint aspect-[16/9] flex items-center justify-center relative">
+              <img src="assets/screen-desktop.png"
+                   alt="Trackora Financial di Desktop"
+                   class="w-full h-full object-cover object-top"
+                   onerror="this.parentElement.innerHTML=devicePlaceholder('fa-desktop','Desktop — 1280×720px','assets/screen-desktop.png')" />
+            </div>
+          </div>
+          <div class="flex flex-col items-center mt-0">
+            <div class="w-16 h-5 bg-slate-200 rounded-b-sm"></div>
+            <div class="w-28 h-2 bg-slate-300 rounded-b-lg"></div>
+          </div>
+        </div>
+        <p class="text-center text-slate-500 text-xs mt-4 flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-desktop text-brand-600"></i> Tampilan Desktop / PC
+        </p>
+      </div>
+
+      <!-- TABLET + MOBILE -->
+      <div class="reveal flex flex-col sm:flex-row items-end justify-center gap-8 sm:gap-12 w-full max-w-2xl">
+
+        <!-- TABLET -->
+        <div class="flex-1 max-w-[300px]">
+          <div class="relative">
+            <div class="rounded-[22px] bg-white border border-slate-200 p-2 shadow-xl"
+                 style="box-shadow: 0 16px 40px rgba(15,23,42,0.10);">
+              <div class="flex items-center justify-center py-1.5 mb-1">
+                <div class="w-10 h-1 rounded-full bg-slate-200"></div>
+              </div>
+              <div class="rounded-[14px] overflow-hidden bg-mint aspect-[3/4] flex items-center justify-center">
+                <img src="assets/screen-tablet.png"
+                     alt="Trackora Financial di Tablet"
+                     class="w-full h-full object-cover object-top"
+                     onerror="this.parentElement.innerHTML=devicePlaceholder('fa-tablet-screen-button','Tablet — 768×1024px','assets/screen-tablet.png')" />
+              </div>
+              <div class="flex items-center justify-center py-2 mt-1">
+                <div class="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center">
+                  <div class="w-4 h-4 rounded-sm border border-slate-300"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-center text-slate-500 text-xs mt-4 flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-tablet-screen-button text-brand-600"></i> Tampilan Tablet
+          </p>
+        </div>
+
+        <!-- MOBILE -->
+        <div class="flex-shrink-0 w-[160px] sm:w-[180px]">
+          <div class="relative">
+            <div class="rounded-[32px] bg-white border border-slate-200 p-1.5 shadow-xl"
+                 style="box-shadow: 0 18px 44px rgba(15,23,42,0.12);">
+              <div class="flex justify-center pt-2 pb-1">
+                <div class="w-16 h-4 rounded-full bg-slate-100 flex items-center justify-center gap-1.5">
+                  <div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+                  <div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div>
+                </div>
+              </div>
+              <div class="rounded-[22px] overflow-hidden bg-mint aspect-[9/19] flex items-center justify-center">
+                <img src="assets/screen-mobile.png"
+                     alt="Trackora Financial di HP"
+                     class="w-full h-full object-cover object-top"
+                     onerror="this.parentElement.innerHTML=devicePlaceholder('fa-mobile-screen','Mobile — 390×844px','assets/screen-mobile.png')" />
+              </div>
+              <div class="flex justify-center py-2.5">
+                <div class="w-12 h-1 rounded-full bg-slate-200"></div>
+              </div>
+            </div>
+            <div class="absolute -right-1 top-20 w-1 h-10 rounded-r bg-slate-200"></div>
+            <div class="absolute -left-1 top-16 w-1 h-7 rounded-l bg-slate-200"></div>
+            <div class="absolute -left-1 top-28 w-1 h-7 rounded-l bg-slate-200"></div>
+          </div>
+          <p class="text-center text-slate-500 text-xs mt-4 flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-mobile-screen text-brand-600"></i> Tampilan HP
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="text-center text-slate-500 text-xs mt-10 reveal">
+      <i class="fa-brands fa-chrome text-brand-600 mr-1.5"></i>
+      Berjalan optimal di Google Chrome, Edge, Firefox, dan Safari — PC maupun HP.
+    </p>
+
+  </div>
+</section>
+<!-- /DEVICE MOCKUP -->
+
+
+<!-- ============================================================
+     SECTION: PRICING — 3 TIERS  (LIGHT)
+     ============================================================ -->
+<section id="harga" class="py-24 bg-white relative overflow-hidden">
+
+  <div class="max-w-6xl mx-auto px-4 relative z-10">
+
+    <div class="text-center mb-14 reveal">
+      <span class="pill pill-mint mb-4">
+        <i class="fa-solid fa-tags text-[0.7rem]"></i> Pilihan Paket
+      </span>
+      <h2 class="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight mt-3">
+        Pilih Tier yang Sesuai<br/>
+        <span class="accent-italic text-[1.1em]">kebutuhan keuanganmu</span>
+      </h2>
+      <p class="text-slate-600 max-w-xl mx-auto leading-relaxed">
+        Tiga tier dengan fitur yang makin lengkap. Semua paket berbayar adalah
+        <strong class="text-slate-900">pembelian satu kali</strong> — tidak ada tagihan bulanan selamanya.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 items-stretch">
+
+      <!-- TIER 1: STARTER -->
+      <div class="card p-7 flex flex-col reveal">
+        <div class="mb-7">
+          <div class="flex items-center justify-between mb-3">
+            <p class="text-slate-700 font-bold tracking-wide text-sm uppercase">Starter</p>
+          </div>
+          <div class="flex items-baseline gap-1.5 mb-2">
+            <span class="font-display text-5xl font-extrabold text-slate-900">Gratis</span>
+          </div>
+          <p class="text-slate-500 text-sm">Untuk kamu yang baru mulai sadar pentingnya mencatat keuangan</p>
+        </div>
+
+        <ul class="space-y-3 flex-1 mb-8">
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Pencatatan transaksi (Double-Entry)
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Manajemen akun &amp; kategori
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Transfer antar rekening
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Dashboard &amp; ringkasan bulanan
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Net Worth tracker dasar
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-400">
+            <i class="fa-solid fa-xmark mt-0.5 flex-shrink-0 text-xs"></i>
+            Budgeting &amp; Sinking Fund
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-400">
+            <i class="fa-solid fa-xmark mt-0.5 flex-shrink-0 text-xs"></i>
+            Hutang &amp; Piutang
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-400">
+            <i class="fa-solid fa-xmark mt-0.5 flex-shrink-0 text-xs"></i>
+            Tracker Langganan
+          </li>
+        </ul>
+
+        <a href="#beli" class="btn-secondary font-bold py-3.5 rounded-xl text-sm text-center block">
+          Mulai Gratis
+        </a>
+      </div>
+
+      <!-- TIER 2: PRO ★ POPULER -->
+      <div class="pricing-popular rounded-3xl p-7 flex flex-col reveal relative md:-mt-3 md:-mb-3">
+        <div class="pill pill-popular absolute -top-3.5 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full uppercase tracking-widest whitespace-nowrap">
+          ✦ Paling Populer
+        </div>
+        <div class="mb-7 mt-2">
+          <div class="flex items-center justify-between mb-3">
+            <p class="text-brand-700 font-bold tracking-wide text-sm uppercase">Pro</p>
+          </div>
+          <div class="flex items-baseline gap-1.5 mb-1">
+            <span class="font-display text-5xl font-extrabold text-slate-900">Rp 99K</span>
+          </div>
+          <p class="text-brand-700 text-xs font-semibold mb-1">Bayar sekali · Akses selamanya</p>
+          <p class="text-slate-500 text-sm">Untuk individu yang serius mengelola keuangan pribadi</p>
+        </div>
+
+        <ul class="space-y-3 flex-1 mb-8">
+          <li class="flex items-start gap-2.5 text-sm text-slate-800">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            <strong>Semua fitur Starter</strong>
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-800">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Sistem Budgeting (limit per kategori)
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-800">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Pos Anggaran / Sinking Fund
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-800">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Manajemen Hutang &amp; Piutang
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-800">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Tracker Langganan (Subscription)
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-800">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Laporan Arus Kas &amp; Tren
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-400">
+            <i class="fa-solid fa-xmark mt-0.5 flex-shrink-0 text-xs"></i>
+            Portofolio Investasi
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-400">
+            <i class="fa-solid fa-xmark mt-0.5 flex-shrink-0 text-xs"></i>
+            Multi-akun Keluarga
+          </li>
+        </ul>
+
+        <a href="#beli" class="btn-primary font-bold py-4 rounded-xl text-sm text-center block">
+          Beli Paket Pro <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
+        </a>
+      </div>
+
+      <!-- TIER 3: ELITE -->
+      <div class="card p-7 flex flex-col reveal">
+        <div class="mb-7">
+          <div class="flex items-center gap-2 mb-3">
+            <p class="text-slate-700 font-bold tracking-wide text-sm uppercase">Elite</p>
+            <span class="pill pill-amber !py-0.5 !px-2 text-[0.55rem]">FAMILY</span>
+          </div>
+          <div class="flex items-baseline gap-1.5 mb-1">
+            <span class="font-display text-5xl font-extrabold text-slate-900">Rp 179K</span>
+          </div>
+          <p class="text-slate-500 text-xs font-semibold mb-1">Bayar sekali · Akses selamanya</p>
+          <p class="text-slate-500 text-sm">Untuk keluarga atau yang ingin kontrol keuangan paling lengkap</p>
+        </div>
+
+        <ul class="space-y-3 flex-1 mb-8">
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            <strong class="text-slate-900">Semua fitur Pro</strong>
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Portofolio Investasi Lengkap (Saham, Reksa Dana, Emas, Kripto)
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Auto P&amp;L Portofolio (Untung/Rugi otomatis)
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Multi-akun (cocok untuk pengelolaan keuangan keluarga)
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Net Worth tracker lengkap (termasuk aset investasi)
+          </li>
+          <li class="flex items-start gap-2.5 text-sm text-slate-700">
+            <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>
+            Laporan &amp; tren keuangan tahunan
+          </li>
+        </ul>
+
+        <a href="#beli" class="btn-secondary font-bold py-3.5 rounded-xl text-sm text-center block">
+          Beli Paket Elite
+        </a>
+      </div>
+
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-5 mt-10 reveal">
+      <p class="text-slate-500 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-shield-halved text-brand-600"></i>
+        Garansi uang kembali 7 hari jika tidak puas. Tanpa pertanyaan.
+      </p>
+      <span class="hidden sm:block text-slate-300">·</span>
+      <p class="text-slate-500 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-headset text-brand-600"></i>
+        Dukungan setup via WhatsApp untuk semua tier berbayar
+      </p>
+    </div>
+
+  </div>
+</section>
+<!-- /PRICING -->
+
+
+<!-- ============================================================
+     SECTION: CARA KERJA  (LIGHT)
+     ============================================================ -->
+<section class="py-24 bg-soft relative">
+  <div class="max-w-5xl mx-auto px-4">
+
+    <div class="text-center mb-14 reveal">
+      <span class="pill pill-mint mb-4">
+        <i class="fa-solid fa-bolt text-[0.7rem]"></i> Cara Kerja
+      </span>
+      <h2 class="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight mt-3">
+        Dari Beli ke Pakai,<br/>
+        <span class="accent-italic text-[1.1em]">kurang dari 10 menit</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-5 reveal">
+
+      <div class="card p-5 text-center relative">
+        <div class="absolute -top-3 -right-3 w-7 h-7 rounded-full bg-brand-600 flex items-center justify-center text-xs font-bold text-white">1</div>
+        <div class="w-12 h-12 icon-ring rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-cart-shopping text-lg"></i>
+        </div>
+        <h4 class="text-slate-900 font-semibold text-sm mb-2">Beli Paket</h4>
+        <p class="text-slate-500 text-xs leading-relaxed">Pilih tier yang sesuai dan selesaikan pembayaran via platform pilihan kamu</p>
+      </div>
+
+      <div class="card p-5 text-center relative">
+        <div class="absolute -top-3 -right-3 w-7 h-7 rounded-full bg-brand-600 flex items-center justify-center text-xs font-bold text-white">2</div>
+        <div class="w-12 h-12 icon-ring rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <i class="fa-brands fa-google-drive text-lg"></i>
+        </div>
+        <h4 class="text-slate-900 font-semibold text-sm mb-2">Copy Sheet ke GDrive</h4>
+        <p class="text-slate-500 text-xs leading-relaxed">Duplikat file Trackora ke Google Drive milikmu sendiri — hanya butuh beberapa klik</p>
+      </div>
+
+      <div class="card p-5 text-center relative">
+        <div class="absolute -top-3 -right-3 w-7 h-7 rounded-full bg-brand-600 flex items-center justify-center text-xs font-bold text-white">3</div>
+        <div class="w-12 h-12 icon-ring rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-code text-lg"></i>
+        </div>
+        <h4 class="text-slate-900 font-semibold text-sm mb-2">Deploy Script</h4>
+        <p class="text-slate-500 text-xs leading-relaxed">Jalankan Apps Script sekali — sistem langsung aktif di akun Google-mu dengan panduan lengkap</p>
+      </div>
+
+      <div class="card p-5 text-center relative">
+        <div class="absolute -top-3 -right-3 w-7 h-7 rounded-full bg-brand-700 flex items-center justify-center text-xs font-bold text-white">
+          <i class="fa-solid fa-check text-[0.6rem]"></i>
+        </div>
+        <div class="w-12 h-12 bg-brand-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-rocket text-lg"></i>
+        </div>
+        <h4 class="text-slate-900 font-semibold text-sm mb-2">Langsung Pakai!</h4>
+        <p class="text-slate-500 text-xs leading-relaxed">Web App Trackora siap digunakan selamanya. Data tersimpan di GDrive-mu, aman terkendali</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- /HOW IT WORKS -->
+
+
+<!-- ============================================================
+     SECTION: TESTIMONI  (LIGHT)
+     ============================================================ -->
+<section id="testimoni" class="py-24 bg-white relative overflow-hidden">
+
+  <div class="max-w-6xl mx-auto px-4 relative z-10">
+
+    <div class="text-center mb-14 reveal">
+      <span class="pill pill-mint mb-4">
+        <i class="fa-solid fa-heart text-[0.7rem]"></i> Kata Mereka
+      </span>
+      <h2 class="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight mt-3">
+        Ribuan Orang Sudah<br/>
+        <span class="accent-italic text-[1.1em]">merasakan bedanya</span>
+      </h2>
+      <p class="text-slate-600 max-w-xl mx-auto leading-relaxed">
+        Dari freelancer hingga keluarga muda — Trackora membantu semua orang
+        mengambil kendali penuh atas keuangan mereka.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5 mb-12">
+
+      <!-- Testi 1 -->
+      <div class="testi-hover card p-6 flex flex-col gap-4 reveal">
+        <div class="flex gap-1">
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+        </div>
+        <p class="text-slate-700 text-sm leading-relaxed flex-1">
+          "Akhirnya nemu tools keuangan yang tampilannya beneran kece, bukan spreadsheet membosankan.
+          Sinking fund-nya ngubah hidup gue — sekarang nabung buat liburan akhir tahun jadi
+          konsisten banget. Dan data gue aman di GDrive sendiri, tenang banget!"
+        </p>
+        <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+          <div class="w-10 h-10 rounded-full icon-ring flex items-center justify-center font-bold text-sm flex-shrink-0">DA</div>
+          <div>
+            <p class="text-slate-900 text-sm font-semibold">Dinda Ayu</p>
+            <p class="text-slate-500 text-xs">Content Creator · Jakarta</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testi 2 -->
+      <div class="testi-hover card p-6 flex flex-col gap-4 reveal">
+        <div class="flex gap-1">
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+        </div>
+        <p class="text-slate-700 text-sm leading-relaxed flex-1">
+          "Sebagai freelancer dengan penghasilan gak menentu, fitur Budget dan Hutang-Piutang Trackora
+          Pro beneran ngebantu banget. Gue sekarang tahu persis berapa cash flow bersih tiap bulan.
+          Worth it banget buat harga sekali bayar!"
+        </p>
+        <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+          <div class="w-10 h-10 rounded-full bg-purple-50 border border-purple-200 text-purple-700 flex items-center justify-center font-bold text-sm flex-shrink-0">RF</div>
+          <div>
+            <p class="text-slate-900 text-sm font-semibold">Rizky Firmansyah</p>
+            <p class="text-slate-500 text-xs">UI/UX Freelancer · Bandung</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testi 3 -->
+      <div class="testi-hover card p-6 flex flex-col gap-4 reveal">
+        <div class="flex gap-1">
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star text-amber-400 text-sm"></i>
+          <i class="fa-solid fa-star-half-stroke text-amber-400 text-sm"></i>
+        </div>
+        <p class="text-slate-700 text-sm leading-relaxed flex-1">
+          "Paket Elite cocok banget buat kami suami-istri. Bisa pantau keuangan keluarga bareng,
+          dari pengeluaran rumah tangga, hutang-piutang, sampai portofolio saham kami — semuanya
+          dalam satu Web App yang rapi. Data aman di GDrive kami sendiri!"
+        </p>
+        <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+          <div class="w-10 h-10 rounded-full bg-teal-50 border border-teal-200 text-teal-700 flex items-center justify-center font-bold text-sm flex-shrink-0">SW</div>
+          <div>
+            <p class="text-slate-900 text-sm font-semibold">Sari Wulandari</p>
+            <p class="text-slate-500 text-xs">Investor Pemula · Surabaya</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Social proof numbers -->
+    <div class="card-soft rounded-3xl p-8 reveal">
+      <div class="grid grid-cols-3 gap-4 text-center">
+        <div>
+          <div class="font-display text-4xl font-extrabold text-brand-700 mb-1">500+</div>
+          <div class="text-slate-500 text-sm">Pengguna Aktif</div>
+        </div>
+        <div class="border-x border-slate-200">
+          <div class="font-display text-4xl font-extrabold text-brand-700 mb-1">4.9 ★</div>
+          <div class="text-slate-500 text-sm">Rating Rata-rata</div>
+        </div>
+        <div>
+          <div class="font-display text-4xl font-extrabold text-brand-700 mb-1">98%</div>
+          <div class="text-slate-500 text-sm">Puas &amp; Rekomendasikan</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- /TESTIMONI -->
+
+
+<!-- ============================================================
+     SECTION: CTA & PEMBAYARAN  (LIGHT)
+     ============================================================ -->
+<section id="beli" class="py-24 bg-soft relative overflow-hidden">
+
+  <div class="blob blob-mint w-[400px] h-[400px] -top-20 -left-20"></div>
+  <div class="blob blob-cyan w-[420px] h-[420px] -bottom-24 -right-20"></div>
+
+  <div class="max-w-3xl mx-auto px-4 text-center relative z-10 reveal">
+    <div class="card !rounded-[2rem] p-10 md:p-14" style="border:1.5px solid #99f6e4; box-shadow: 0 16px 40px rgba(20,184,166,0.10), 0 36px 80px rgba(20,184,166,0.08);">
+
+      <div class="pill pill-mint mb-7">
+        <i class="fa-solid fa-lock text-[0.7rem]"></i>
+        Akses Lifetime · Data 100% di GDrive-mu
+      </div>
+
+      <h2 class="font-display text-3xl md:text-5xl font-extrabold text-slate-900 mb-5 leading-tight tracking-tight">
+        Ambil Kendali <span class="accent-italic text-[1.1em]">keuanganmu.</span><br/>Mulai Hari Ini
+      </h2>
+      <p class="text-slate-600 text-lg mb-10 leading-relaxed">
+        Beli sekali, pakai selamanya. Tidak ada langganan, tidak ada data kamu di server orang lain.
+        Trackora adalah investasi terbaik untuk masa depan finansialmu.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+
+        <a href="https://app.tribelio.com/checkout/GANTI-LINK-INI"
+           target="_blank" rel="noopener noreferrer"
+           class="btn-primary font-bold px-7 py-4 rounded-xl flex items-center justify-center gap-2.5 text-sm">
+          <i class="fa-solid fa-store text-base"></i>
+          Beli via Tribelio
+        </a>
+
+        <a href="https://mayar.id/p/GANTI-LINK-INI"
+           target="_blank" rel="noopener noreferrer"
+           class="btn-secondary font-bold px-7 py-4 rounded-xl flex items-center justify-center gap-2.5 text-sm">
+          <i class="fa-solid fa-credit-card text-brand-600 text-base"></i>
+          Beli via Mayar
+        </a>
+
+        <a href="https://wa.me/62XXXXXXXXXX?text=Halo%2C%20saya%20tertarik%20beli%20Trackora%20Financial%20Pro"
+           target="_blank" rel="noopener noreferrer"
+           class="btn-secondary font-bold px-7 py-4 rounded-xl flex items-center justify-center gap-2.5 text-sm">
+          <i class="fa-brands fa-whatsapp text-green-500 text-base"></i>
+          Order via WhatsApp
+        </a>
+
+      </div>
+
+      <div class="grid grid-cols-3 gap-3 text-center mb-8">
+        <div class="card-soft rounded-xl p-3">
+          <p class="text-slate-700 font-bold text-sm">Starter</p>
+          <p class="text-slate-500 text-xs mt-0.5">Gratis</p>
+        </div>
+        <div class="card-soft rounded-xl p-3" style="border:1.5px solid #14b8a6;background:#f0fdfa">
+          <p class="text-brand-700 font-bold text-sm">Pro</p>
+          <p class="text-slate-700 text-xs mt-0.5 font-semibold">Rp 99.000</p>
+        </div>
+        <div class="card-soft rounded-xl p-3">
+          <p class="text-slate-700 font-bold text-sm">Elite</p>
+          <p class="text-slate-500 text-xs mt-0.5">Rp 179.000</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-5 text-xs text-slate-500">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-brand-600"></i> Garansi 7 Hari</span>
+        <span class="flex items-center gap-1.5"><i class="fa-brands fa-google text-brand-600"></i> Berjalan di GDrive-mu</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-headset text-brand-600"></i> Support Setup via WA</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-infinity text-brand-600"></i> 1x Bayar, Selamanya</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- /CTA & PEMBAYARAN -->
+
+
+<!-- ============================================================
+     SECTION: Q&A — FREQUENTLY ASKED QUESTIONS (NEW)
+     ============================================================ -->
+<section id="qa" class="py-24 bg-white relative overflow-hidden">
+
+  <div class="max-w-3xl mx-auto px-4 relative z-10">
+
+    <div class="text-center mb-12 reveal">
+      <span class="pill pill-mint mb-4">
+        <i class="fa-solid fa-circle-question text-[0.7rem]"></i> Tanya Jawab
+      </span>
+      <h2 class="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight mt-3">
+        Pertanyaan yang Sering<br/>
+        <span class="accent-italic text-[1.1em]">ditanyakan</span>
+      </h2>
+      <p class="text-slate-600 max-w-xl mx-auto leading-relaxed">
+        Belum yakin? Berikut jawaban atas pertanyaan paling umum dari calon pengguna Trackora.
+      </p>
+    </div>
+
+    <div class="space-y-3 reveal" id="accordion">
+
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false">
+          <span>Apakah data saya aman?</span>
+          <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="acc-content">
+          <div class="acc-body">
+            Sangat aman. Data Anda tersimpan <strong class="text-slate-900">100% di akun Google Drive Anda sendiri</strong>.
+            Kami tidak memiliki akses ke data tersebut — bahkan satu byte pun tidak menyentuh server kami.
+            Anda adalah satu-satunya pemilik dan pengendali data keuangan Anda.
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false">
+          <span>Apakah ini berlangganan bulanan?</span>
+          <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="acc-content">
+          <div class="acc-body">
+            Tidak, ini adalah <strong class="text-slate-900">pembelian sekali bayar (One-Time Payment)</strong>
+            untuk akses selamanya. Tidak ada tagihan tersembunyi, tidak ada pembaharuan tahunan.
+            Beli sekali, pakai selamanya.
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false">
+          <span>Apakah bisa digunakan di HP?</span>
+          <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="acc-content">
+          <div class="acc-body">
+            Bisa. Trackora dirancang <strong class="text-slate-900">responsif</strong> dan bisa diakses
+            seperti aplikasi PWA melalui browser HP Anda. Cukup buka link Web App dan tambahkan ke
+            home screen — pengalaman setara dengan aplikasi native.
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false">
+          <span>Bagaimana cara setup-nya?</span>
+          <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+        </button>
+        <div class="acc-content">
+          <div class="acc-body">
+            Sangat mudah, <strong class="text-slate-900">kurang dari 5 menit</strong>. Kami menyediakan
+            panduan lengkap dan video tutorial langkah demi langkah. Bahkan tersedia dukungan setup via
+            WhatsApp jika Anda mengalami kendala di mana pun prosesnya.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Soft CTA -->
+    <div class="text-center mt-10 reveal">
+      <p class="text-slate-500 text-sm">Masih ragu? Hubungi kami langsung —</p>
+      <a href="https://wa.me/62XXXXXXXXXX" target="_blank"
+         class="inline-flex items-center gap-2 mt-2 text-brand-700 font-semibold text-sm hover:text-brand-800 transition-colors">
+        <i class="fa-brands fa-whatsapp text-green-500"></i> Chat via WhatsApp
+        <i class="fa-solid fa-arrow-right text-[0.65rem]"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
+<!-- /Q&A -->
+
+
+<!-- ============================================================
+     FOOTER  (LIGHT)
+     ============================================================ -->
+<footer class="bg-soft border-t border-slate-200 py-16">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid md:grid-cols-4 gap-10 mb-12">
+
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2.5 mb-4">
+          <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="10" fill="#0D9488"/>
+            <path d="M11 14h18M11 19h12M11 24h15M11 29h9" stroke="#5EEAD4" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="29" cy="29" r="3" fill="#5EEAD4"/>
+          </svg>
+          <span class="font-display font-extrabold text-lg">
+            <span class="text-slate-900">Trackora</span><span class="text-brand-700"> Financial</span>
+          </span>
+        </div>
+        <p class="text-slate-500 text-sm leading-relaxed max-w-xs mb-5">
+          Web App Personal Finance pertama di Indonesia yang berjalan langsung di Google Sheets
+          kamu sendiri. UI modern, data privat, 1x bayar — selamanya.
+        </p>
+        <div class="flex gap-2.5">
+          <a href="https://instagram.com/GANTI-USERNAME" target="_blank" aria-label="Instagram"
+             class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-brand-700 hover:border-brand-400 transition-colors">
+            <i class="fa-brands fa-instagram text-sm"></i>
+          </a>
+          <a href="https://tiktok.com/@GANTI-USERNAME" target="_blank" aria-label="TikTok"
+             class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-brand-700 hover:border-brand-400 transition-colors">
+            <i class="fa-brands fa-tiktok text-sm"></i>
+          </a>
+          <a href="https://youtube.com/@GANTI-USERNAME" target="_blank" aria-label="YouTube"
+             class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-brand-700 hover:border-brand-400 transition-colors">
+            <i class="fa-brands fa-youtube text-sm"></i>
+          </a>
+          <a href="https://linkedin.com/in/GANTI-USERNAME" target="_blank" aria-label="LinkedIn"
+             class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-brand-700 hover:border-brand-400 transition-colors">
+            <i class="fa-brands fa-linkedin-in text-sm"></i>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-slate-900 text-sm font-bold mb-4">Navigasi</p>
+        <ul class="space-y-2.5">
+          <li><a href="#tentang"   class="text-slate-500 text-sm hover:text-brand-700 transition-colors">Tentang Trackora</a></li>
+          <li><a href="#komparasi" class="text-slate-500 text-sm hover:text-brand-700 transition-colors">Keunggulan</a></li>
+          <li><a href="#fitur"     class="text-slate-500 text-sm hover:text-brand-700 transition-colors">Fitur Produk</a></li>
+          <li><a href="#harga"     class="text-slate-500 text-sm hover:text-brand-700 transition-colors">Harga &amp; Paket</a></li>
+          <li><a href="#testimoni" class="text-slate-500 text-sm hover:text-brand-700 transition-colors">Testimoni</a></li>
+          <li><a href="#qa"        class="text-slate-500 text-sm hover:text-brand-700 transition-colors">Tanya Jawab</a></li>
+          <li><a href="#beli"      class="text-slate-500 text-sm hover:text-brand-700 transition-colors">Beli Sekarang</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-slate-900 text-sm font-bold mb-4">Bantuan &amp; Legal</p>
+        <ul class="space-y-2.5">
+          <li>
+            <a href="https://wa.me/62XXXXXXXXXX" target="_blank"
+               class="text-slate-500 text-sm hover:text-brand-700 transition-colors flex items-center gap-2">
+              <i class="fa-brands fa-whatsapp text-xs text-green-500"></i> WhatsApp Support
+            </a>
+          </li>
+          <li>
+            <a href="mailto:zulfigroup@gmail.com"
+               class="text-slate-500 text-sm hover:text-brand-700 transition-colors flex items-center gap-2">
+              <i class="fa-solid fa-envelope text-xs text-brand-600"></i> zulfigroup@gmail.com
+            </a>
+          </li>
+          <li><a href="/kebijakan-privasi.html" class="text-slate-500 text-sm hover:text-brand-700 transition-colors">Kebijakan Privasi</a></li>
+          <li><a href="/syarat-ketentuan.html" class="text-slate-500 text-sm hover:text-brand-700 transition-colors">Syarat &amp; Ketentuan</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="divider-soft mb-6"></div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+      <p>&copy; 2026 Trackora Financial by <span class="text-slate-700 font-semibold">Zulfinfinity Digital Labs</span>. Hak Cipta Dilindungi.</p>
+      <p class="flex items-center gap-1.5">Dibuat dengan <i class="fa-solid fa-heart text-brand-600"></i> di Indonesia</p>
+    </div>
+  </div>
+</footer>
+<!-- /FOOTER -->
+
+
+<!-- ============================================================
+     JAVASCRIPT — Navbar, Mobile Menu, Carousel, Accordion, Chart
+     ============================================================ -->
+<script>
+  /* ── Placeholder for device images ── */
+  function devicePlaceholder(icon, label, path) {
+    return `<div class="device-ph">
+      <i class="fa-solid ${icon}" style="font-size:2.2rem;color:#94a3b8"></i>
+      <p style="color:#64748b;font-size:0.72rem;font-weight:500;margin-top:6px">${label}</p>
+      <p style="color:#94a3b8;font-size:0.62rem">${path}</p>
+    </div>`;
+  }
+
+  /* =============================================
+     HERO MINI CHART (Chart.js)
+     ============================================= */
+  (function initHeroChart() {
+    const canvas = document.getElementById('heroChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+
+    const ctx = canvas.getContext('2d');
+    const grad1 = ctx.createLinearGradient(0, 0, 0, 120);
+    grad1.addColorStop(0, 'rgba(20,184,166,0.35)');
+    grad1.addColorStop(1, 'rgba(20,184,166,0.00)');
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Okt', 'Nov', 'Des', 'Jan', 'Feb', 'Mar'],
+        datasets: [{
+          label: 'Income',
+          data: [12, 14, 13.5, 16, 17.2, 18.2],
+          borderColor: '#0d9488',
+          backgroundColor: grad1,
+          tension: 0.42,
+          fill: true,
+          pointRadius: 0,
+          borderWidth: 2,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false },
+        },
+        scales: {
+          x: {
+            ticks: { color: '#94a3b8', font: { size: 9 } },
+            grid:  { display: false }
+          },
+          y: { display: false, beginAtZero: true }
+        }
+      }
+    });
+  })();
+
+  /* =============================================
+     FEATURE CAROUSEL
+     ============================================= */
+  const featureSlides = [
+    {
+      title:     'Pencatatan Transaksi Double-Entry',
+      icon:      'fa-solid fa-receipt',
+      tier:      'Semua Tier',
+      tierClass: '',
+      desc:      'Setiap transaksi dicatat di dua sisi secara otomatis — debit dan kredit selalu seimbang. Input lewat form Web App yang bersih, bukan sel spreadsheet.',
+      bullets:   ['Form input modern, bukan tabel spreadsheet', 'Kategori & akun yang bisa dikustomisasi', 'Riwayat transaksi dengan filter & pencarian', 'Transfer antar rekening tanpa distorsi laporan'],
+      img:       'assets/feat-transaksi.png',
+      imgAlt:    'Fitur Pencatatan Transaksi Trackora',
+    },
+    {
+      title:     'Sistem Budgeting',
+      icon:      'fa-solid fa-bullseye',
+      tier:      'Pro & Elite',
+      tierClass: '',
+      desc:      'Tentukan batas pengeluaran per kategori setiap bulan. Dashboard menampilkan sisa budget secara real-time. Tersedia fitur override untuk kondisi bulan yang tidak biasa.',
+      bullets:   ['Limit budget per kategori pengeluaran', 'Visual progress bar sisa anggaran', 'Override budget per bulan tanpa mengubah default', 'Alert otomatis saat mendekati batas'],
+      img:       'assets/feat-budgeting.png',
+      imgAlt:    'Fitur Sistem Budgeting Trackora',
+    },
+    {
+      title:     'Pos Anggaran (Sinking Fund)',
+      icon:      'fa-solid fa-vault',
+      tier:      'Pro & Elite',
+      tierClass: '',
+      desc:      'Sisihkan dana secara bertahap untuk tujuan masa depan. Dari dana darurat, liburan, beli gadget, hingga DP rumah — semua terpantau dengan progress bar yang memotivasi.',
+      bullets:   ['Buat pos anggaran untuk setiap tujuan keuangan', 'Progress bar visual menuju target', 'Alokasi dana fleksibel kapan saja', 'Riwayat kontribusi per pos anggaran'],
+      img:       'assets/feat-sinkingfund.png',
+      imgAlt:    'Fitur Sinking Fund Trackora',
+    },
+    {
+      title:     'Manajemen Hutang & Piutang',
+      icon:      'fa-solid fa-file-invoice-dollar',
+      tier:      'Pro & Elite',
+      tierClass: '',
+      desc:      'Catat siapa yang berhutang ke kamu dan ke siapa kamu berhutang. Lengkap dengan tanggal jatuh tempo, cicilan, dan status pelunasan yang selalu ter-update.',
+      bullets:   ['Catat hutang & piutang dengan detail lengkap', 'Tanggal jatuh tempo & reminder', 'Status: aktif, sebagian lunas, lunas', 'Integrasi otomatis ke laporan arus kas'],
+      img:       'assets/feat-hutangpiutang.png',
+      imgAlt:    'Fitur Manajemen Hutang Piutang Trackora',
+    },
+    {
+      title:     'Tracker Langganan',
+      icon:      'fa-solid fa-repeat',
+      tier:      'Pro & Elite',
+      tierClass: '',
+      desc:      'Pantau semua biaya subscription kamu dalam satu tempat: streaming, tools digital, SaaS, gym, dan lainnya. Tidak ada biaya tersembunyi yang lolos dari radar.',
+      bullets:   ['Daftar semua langganan bulanan & tahunan', 'Total biaya subscription per bulan / tahun', 'Tanggal renewal dan pengingat', 'Identifikasi langganan yang tidak terpakai'],
+      img:       'assets/feat-langganan.png',
+      imgAlt:    'Fitur Tracker Langganan Trackora',
+    },
+    {
+      title:     'Portofolio Investasi',
+      icon:      'fa-solid fa-chart-line',
+      tier:      'Eksklusif Elite',
+      tierClass: 'elite',
+      desc:      'Monitor semua aset investasi dalam satu dashboard: saham IDX, reksa dana, emas, kripto, dan aset lainnya. P&L (untung/rugi) dihitung otomatis secara real-time.',
+      bullets:   ['Multi-aset: saham, reksa dana, emas, kripto', 'Unrealized & realized P&L otomatis', 'Alokasi portofolio dalam pie chart', 'Riwayat transaksi beli/jual per aset'],
+      img:       'assets/feat-portofolio.png',
+      imgAlt:    'Fitur Portofolio Investasi Trackora',
+    },
+    {
+      title:     'Dashboard & Laporan Personal',
+      icon:      'fa-solid fa-gauge-high',
+      tier:      'Semua Tier',
+      tierClass: '',
+      desc:      'Visualisasi keuangan yang langsung bisa dibaca: Net Worth, Arus Kas bulanan, dan Tren pengeluaran per kategori — semuanya otomatis tanpa rumus manual.',
+      bullets:   ['Net Worth (kekayaan bersih) real-time', 'Grafik arus kas pemasukan vs pengeluaran', 'Tren pengeluaran per kategori bulan ke bulan', 'Ringkasan bulanan satu halaman'],
+      img:       'assets/feat-dashboard.png',
+      imgAlt:    'Fitur Dashboard Trackora',
+    },
+  ];
+
+  let featIdx     = 0;
+  let featTimer   = null;
+  const FEAT_AUTO = 6000;
+
+  const tabsEl  = document.getElementById('feat-tabs');
+  const imgWrap = document.getElementById('feat-img-wrap');
+  const textEl  = document.getElementById('feat-text');
+  const dotsEl  = document.getElementById('feat-dots');
+  const prevBtn = document.getElementById('feat-prev');
+  const nextBtn = document.getElementById('feat-next');
+
+  featureSlides.forEach((f, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'feat-tab' + (i === 0 ? ' active' : '');
+    btn.setAttribute('aria-label', f.title);
+    btn.innerHTML = `<span class="tab-icon"><i class="${f.icon}"></i></span>
+      <span class="hidden lg:block truncate">${f.title}</span>`;
+    btn.addEventListener('click', () => goTo(i, true));
+    tabsEl.appendChild(btn);
+  });
+
+  featureSlides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'feat-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', `Slide ${i+1}`);
+    d.addEventListener('click', () => goTo(i, true));
+    dotsEl.appendChild(d);
+  });
+
+  function renderSlide(idx) {
+    const f = featureSlides[idx];
+
+    imgWrap.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = f.img;
+    img.alt = f.imgAlt;
+    img.className = 'w-full h-full object-cover object-top';
+    img.style.opacity = '0';
+    img.style.transition = 'opacity 0.4s ease';
+    img.onerror = function() {
+      this.parentElement.innerHTML = `<div class="device-ph">
+        <i class="${f.icon}" style="font-size:2.6rem;color:#5eead4"></i>
+        <p style="color:#475569;font-size:0.78rem;margin-top:10px;font-weight:600">${f.imgAlt}</p>
+        <p style="color:#94a3b8;font-size:0.65rem;margin-top:2px">${f.img}</p>
+        <p style="color:#0f766e;font-size:0.62rem;margin-top:6px;background:#ecfdf5;padding:4px 12px;border-radius:8px;border:1px solid #99f6e4">
+          Upload gambar screenshot fitur ini ke folder assets/
+        </p>
+      </div>`;
+    };
+    imgWrap.appendChild(img);
+    requestAnimationFrame(() => { img.style.opacity = '1'; });
+
+    const bullets = f.bullets.map(b =>
+      `<li class="flex items-start gap-2.5 text-sm text-slate-700">
+         <i class="fa-solid fa-check text-teal-500 mt-0.5 flex-shrink-0 text-xs"></i>${b}
+       </li>`
+    ).join('');
+
+    textEl.innerHTML = `
+      <div>
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <h3 class="text-slate-900 font-bold text-lg leading-tight">${f.title}</h3>
+          <span class="tier-pill ${f.tierClass}"><i class="fa-solid fa-layer-group" style="font-size:0.6rem"></i>${f.tier}</span>
+        </div>
+        <p class="text-slate-600 text-sm leading-relaxed mb-4">${f.desc}</p>
+        <ul class="grid sm:grid-cols-2 gap-2">${bullets}</ul>
+      </div>
+      <div class="mt-5 pt-4 border-t border-slate-200 flex items-center justify-between">
+        <span class="text-slate-400 text-xs">${idx+1} / ${featureSlides.length}</span>
+        <span class="text-slate-400 text-xs hidden sm:block">Geser atau klik panah untuk navigasi</span>
+      </div>`;
+  }
+
+  function updateNav(idx) {
+    tabsEl.querySelectorAll('.feat-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+    dotsEl.querySelectorAll('.feat-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+
+    const activeTab = tabsEl.querySelectorAll('.feat-tab')[idx];
+    if (activeTab) {
+      tabsEl.scrollTo({
+        left: activeTab.offsetLeft - (tabsEl.clientWidth / 2) + (activeTab.clientWidth / 2),
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  function goTo(idx, resetTimer = false) {
+    featIdx = (idx + featureSlides.length) % featureSlides.length;
+    renderSlide(featIdx);
+    updateNav(featIdx);
+    if (resetTimer) startAutoPlay();
+  }
+
+  function startAutoPlay() {
+    clearInterval(featTimer);
+    featTimer = setInterval(() => goTo(featIdx + 1), FEAT_AUTO);
+  }
+
+  prevBtn.addEventListener('click', () => goTo(featIdx - 1, true));
+  nextBtn.addEventListener('click', () => goTo(featIdx + 1, true));
+
+  const carouselRoot = tabsEl.closest('.card');
+  if (carouselRoot) {
+    carouselRoot.addEventListener('mouseenter', () => clearInterval(featTimer));
+    carouselRoot.addEventListener('mouseleave', startAutoPlay);
+  }
+
+  let touchStartX = 0;
+  imgWrap.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+  imgWrap.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) goTo(featIdx + (dx < 0 ? 1 : -1), true);
+  });
+
+  renderSlide(0);
+  startAutoPlay();
+
+  /* =============================================
+     NAVBAR SCROLL STATE
+     ============================================= */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 30);
+  }, { passive: true });
+
+  /* =============================================
+     MOBILE HAMBURGER MENU
+     ============================================= */
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    hamburger.innerHTML = open
+      ? '<i class="fa-solid fa-xmark text-lg text-brand-700"></i>'
+      : '<i class="fa-solid fa-bars text-lg"></i>';
+  });
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.innerHTML = '<i class="fa-solid fa-bars text-lg"></i>';
+  }
+
+  /* =============================================
+     Q&A ACCORDION
+     ============================================= */
+  document.querySelectorAll('#accordion .acc-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const item = trigger.parentElement;
+      const content = item.querySelector('.acc-content');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('#accordion .acc-item').forEach(i => {
+        i.classList.remove('open');
+        const c = i.querySelector('.acc-content');
+        if (c) c.style.maxHeight = null;
+        const t = i.querySelector('.acc-trigger');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+
+      // Toggle current
+      if (!isOpen) {
+        item.classList.add('open');
+        content.style.maxHeight = content.scrollHeight + 'px';
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* =============================================
+     SCROLL REVEAL (staggered)
+     ============================================= */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+      const idx = siblings.indexOf(entry.target);
+      entry.target.style.transitionDelay = `${Math.min(idx * 80, 400)}ms`;
+      entry.target.classList.add('visible');
+      revealObs.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* =============================================
+     ACTIVE NAV LINK ON SCROLL
+     ============================================= */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${e.target.id}`);
+        });
+      }
+    });
+  }, { threshold: 0.45 });
+
+  sections.forEach(s => navObs.observe(s));
+</script>
+
+</body>
+</html>
