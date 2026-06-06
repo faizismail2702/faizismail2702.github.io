@@ -20,7 +20,22 @@
        Source: src/input.css  •  Config: tailwind.config.js
        Rebuild: yarn build (lihat README.md)
        ============================================= -->
-  <link rel="stylesheet" href="./tailwind.css" />
+       <script src="https://cdn.tailwindcss.com"></script>
+       <script>
+         tailwind.config = {
+           theme: {
+             extend: {
+               fontFamily: { 
+                 sans: ['Plus Jakarta Sans', 'sans-serif'], 
+                 display: ['Instrument Serif', 'serif'] 
+               },
+               colors: { 
+                 brand: { 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e' }
+               }
+             }
+           }
+         }
+       </script>
 
   <!-- =============================================
        CHART.JS via CDN — untuk grafik di mockup hero
@@ -208,7 +223,9 @@
                   <p class="text-[0.65rem] text-slate-500 font-semibold uppercase tracking-wider">Cash Flow · Last 6 months</p>
                   <span class="text-[0.55rem] text-slate-400">2026</span>
                 </div>
-                <canvas id="heroChart" height="80"></canvas>
+                <div class="relative h-[80px] w-full">
+                  <canvas id="heroChart"></canvas>
+                </div>
               </div>
 
               <!-- Tiny txn list -->
