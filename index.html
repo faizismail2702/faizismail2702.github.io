@@ -106,6 +106,11 @@
            .testi-hover:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(15,23,42,0.06); }
            .browser-frame { background: #fff; border: 1px solid #e2e8f0; border-radius: 1.25rem; box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 12px 24px rgba(15,23,42,0.06), 0 36px 72px -16px rgba(20,184,166,0.18); }
          }
+         /* Scrollbar cantik untuk menu fitur */
+          #feat-tabs::-webkit-scrollbar { width: 5px; height: 5px; }
+          #feat-tabs::-webkit-scrollbar-track { background: transparent; }
+          #feat-tabs::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+          #feat-tabs::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
        </style>
      
        <!-- =============================================
@@ -130,7 +135,7 @@
 
     <!-- Logo (SVG) -->
     <a href="#" class="flex items-center gap-2.5">
-      <img src="assets/gambar-aplikasi-anda.png" alt="Logo Trackora" class="w-[34px] h-[34px] object-contain flex-shrink-0" />
+      <img src="assets/icon_web.png" alt="Logo Trackora" class="w-[34px] h-[34px] object-contain flex-shrink-0" />
       
       <span class="font-display font-extrabold text-lg tracking-tight">
         <span class="text-slate-900">Trackora</span><span class="text-brand-600"> Financial</span>
@@ -684,10 +689,10 @@
   <div class="max-w-6xl mx-auto px-4 reveal">
     <div class="card overflow-hidden !rounded-3xl">
 
-      <div class="flex flex-col lg:flex-row min-h-[540px]">
+      <div class="flex flex-col lg:flex-row min-h-[560px] lg:h-[560px]">
 
         <!-- LEFT: tab pills -->
-        <nav id="feat-tabs" class="lg:w-[260px] flex-shrink-0 flex lg:flex-col overflow-x-auto lg:overflow-x-visible border-b lg:border-b-0 lg:border-r border-slate-200 bg-soft p-3 gap-1.5 lg:p-4 lg:gap-2">
+        <nav id="feat-tabs" class="lg:w-[260px] flex-shrink-0 flex lg:flex-col overflow-x-auto lg:overflow-y-auto border-b lg:border-b-0 lg:border-r border-slate-200 bg-soft p-3 gap-1.5 lg:p-4 lg:gap-2">
           <!-- Injected by JS -->
         </nav>
 
