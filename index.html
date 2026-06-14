@@ -243,76 +243,21 @@
 
           <!-- Browser frame -->
           <div class="browser-frame relative z-10 overflow-hidden">
-            <!-- Browser top bar -->
+            
+            <!-- Browser top bar (Biarkan ini jika Anda ingin bingkai browser gaya Mac tetap ada) -->
             <div class="flex items-center gap-1.5 px-3 py-2.5 border-b border-slate-200 bg-slate-50">
               <span class="w-2.5 h-2.5 rounded-full bg-red-300"></span>
               <span class="w-2.5 h-2.5 rounded-full bg-amber-300"></span>
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span>
               <div class="mx-auto flex items-center gap-2 bg-white border border-slate-200 px-3 py-1 rounded-md text-[0.65rem] text-slate-500">
                 <i class="fa-solid fa-lock text-brand-500 text-[0.6rem]"></i>
-                <span>app.trackora.id/dashboard</span>
+                <span>trackoraproject.com/trackora-pwa</span>
               </div>
             </div>
 
-            <!-- Dashboard content -->
-            <div class="p-4 bg-white">
-              <!-- Header row -->
-              <div class="flex items-center justify-between mb-4">
-                <div>
-                  <p class="text-[0.65rem] text-slate-400 uppercase tracking-wider font-semibold">Net Worth</p>
-                  <p class="font-display text-xl font-extrabold text-slate-900">Rp 128.450.000</p>
-                </div>
-                <div class="pill pill-mint text-[0.6rem]">
-                  <i class="fa-solid fa-arrow-trend-up text-[0.55rem]"></i>
-                  +12.4% MoM
-                </div>
-              </div>
-
-              <!-- Mini stat cards -->
-              <div class="grid grid-cols-3 gap-2 mb-4">
-                <div class="rounded-xl p-2.5 bg-emerald-50 border border-emerald-100">
-                  <p class="text-[0.55rem] text-emerald-700 font-semibold uppercase tracking-wider">Income</p>
-                  <p class="text-[0.78rem] font-bold text-slate-900 mt-0.5">Rp 18,2 Jt</p>
-                </div>
-                <div class="rounded-xl p-2.5 bg-rose-50 border border-rose-100">
-                  <p class="text-[0.55rem] text-rose-700 font-semibold uppercase tracking-wider">Expense</p>
-                  <p class="text-[0.78rem] font-bold text-slate-900 mt-0.5">Rp 11,4 Jt</p>
-                </div>
-                <div class="rounded-xl p-2.5 bg-teal-50 border border-teal-100">
-                  <p class="text-[0.55rem] text-teal-700 font-semibold uppercase tracking-wider">Savings</p>
-                  <p class="text-[0.78rem] font-bold text-slate-900 mt-0.5">Rp 6,8 Jt</p>
-                </div>
-              </div>
-
-              <!-- Chart area -->
-              <div class="rounded-xl border border-slate-200 p-3 mb-3">
-                <div class="flex items-center justify-between mb-2">
-                  <p class="text-[0.65rem] text-slate-500 font-semibold uppercase tracking-wider">Cash Flow · Last 6 months</p>
-                  <span class="text-[0.55rem] text-slate-400">2026</span>
-                </div>
-                <div class="relative h-[80px] w-full">
-                  <canvas id="heroChart"></canvas>
-                </div>
-              </div>
-
-              <!-- Tiny txn list -->
-              <div class="space-y-1.5">
-                <div class="flex items-center justify-between text-[0.68rem]">
-                  <div class="flex items-center gap-2">
-                    <span class="w-5 h-5 rounded-md bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fa-solid fa-bowl-food text-[0.55rem]"></i></span>
-                    <span class="text-slate-700 font-medium">Makan siang</span>
-                  </div>
-                  <span class="text-rose-600 font-semibold">- Rp 45rb</span>
-                </div>
-                <div class="flex items-center justify-between text-[0.68rem]">
-                  <div class="flex items-center gap-2">
-                    <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fa-solid fa-briefcase text-[0.55rem]"></i></span>
-                    <span class="text-slate-700 font-medium">Gaji bulanan</span>
-                  </div>
-                  <span class="text-emerald-600 font-semibold">+ Rp 14,5 Jt</span>
-                </div>
-              </div>
-            </div>
+            <!-- Ganti src dengan path gambar aplikasi Anda -->
+            <img src="assets/gambar-aplikasi-anda.png" alt="Dashboard Aplikasi" class="w-full h-auto object-cover" />
+            
           </div>
 
           <!-- Floating card: Kekayaan Bersih -->
@@ -815,7 +760,7 @@
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span>
               <div class="mx-auto flex items-center gap-2 bg-white border border-slate-200 px-4 py-1 rounded-md text-xs text-slate-500 flex-1 max-w-xs">
                 <i class="fa-solid fa-lock text-brand-500 text-xs"></i>
-                <span>app.trackora.id</span>
+                <span>trackoraproject.com/trackora-pwa</span>
               </div>
             </div>
             <div class="rounded-b-xl overflow-hidden bg-mint aspect-[16/9] flex items-center justify-center relative">
