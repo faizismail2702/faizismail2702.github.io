@@ -1252,11 +1252,8 @@
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
 
-        <a id="btn-checkout-mayar" href="https://trackora.myr.id/app/trackora-grow"
-           target="_blank" rel="noopener noreferrer"
-           class="btn-primary font-bold px-7 py-4 rounded-xl flex items-center justify-center gap-2.5 text-sm">
-          <i class="fa-solid fa-store text-base"></i>
-          Beli via Mayar
+        <a id="btn-checkout-mayar" href="https://trackora.myr.id/app/trackora-grow" target="_blank" rel="noopener noreferrer" class="btn-primary font-bold px-7 py-4 rounded-xl flex items-center justify-center gap-2.5 text-sm">
+          <i class="fa-solid fa-store text-base"></i> Beli via Mayar
         </a>
 
         <a href="https://wa.me/6285922238144?text=Halo%2C%20saya%20tertarik%20beli%20Trackora%20Financial%20Grow"
@@ -1879,26 +1876,20 @@
      TIER SELECTION LOGIC
      ============================================= */
   function selectTier(tierId, checkoutLink) {
-    // 1. Reset semua styling kartu
+    // Reset styling
     document.getElementById('tier-card-core').classList.remove('tier-selected');
     document.getElementById('tier-card-grow').classList.remove('tier-selected');
     document.getElementById('tier-card-wealth').classList.remove('tier-selected');
 
-    // 2. Beri efek visual pada kartu yang diklik
+    // Beri efek pada yang dipilih
     document.getElementById(`tier-card-${tierId}`).classList.add('tier-selected');
 
-    // 3. Ubah link pada tombol Beli via Mayar (baik di atas maupun di bawah)
-    const btnMayarTop = document.querySelector('a[href^="https://trackora.myr.id/app/trackora-"]');
+    // Ubah link tombol
     const btnMayarBtm = document.getElementById('btn-checkout-mayar');
-    
     if (btnMayarBtm) btnMayarBtm.href = checkoutLink;
-    
-    // (Opsional) Jika Anda juga ingin mengubah tombol di navbar atas:
-    const btnNavbar = document.querySelector('#navbar .btn-primary');
-    if (btnNavbar) btnNavbar.href = checkoutLink;
   }
 
-  // Pilih otomatis paket Grow saat pertama kali halaman dimuat
+  // Set default saat halaman dimuat
   document.addEventListener('DOMContentLoaded', () => {
     selectTier('grow', 'https://trackora.myr.id/app/trackora-grow');
   });
