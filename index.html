@@ -105,6 +105,7 @@
            .testi-hover { transition: all 0.3s ease; }
            .testi-hover:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(15,23,42,0.06); }
            .browser-frame { background: #fff; border: 1px solid #e2e8f0; border-radius: 1.25rem; box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 12px 24px rgba(15,23,42,0.06), 0 36px 72px -16px rgba(20,184,166,0.18); }
+           .tier-selected { border-color: #14b8a6 !important; box-shadow: 0 0 0 4px rgba(20,184,166,0.15) !important; transform: translateY(-4px); }
          }
          /* Scrollbar cantik untuk menu fitur */
           #feat-tabs::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -1251,7 +1252,7 @@
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
 
-        <a href="https://trackora.myr.id/"
+        <a id="btn-checkout-mayar" href="https://trackora.myr.id/app/trackora-grow"
            target="_blank" rel="noopener noreferrer"
            class="btn-primary font-bold px-7 py-4 rounded-xl flex items-center justify-center gap-2.5 text-sm">
           <i class="fa-solid fa-store text-base"></i>
@@ -1873,6 +1874,35 @@
   }, { threshold: 0.45 });
 
   sections.forEach(s => navObs.observe(s));
+
+  /* =============================================
+     TIER SELECTION LOGIC
+     ============================================= */
+  function selectTier(tierId, checkoutLink) {
+    // 1. Reset semua styling kartu
+    document.getElementById('tier-card-core').classList.remove('tier-selected');
+    document.getElementById('tier-card-grow').classList.remove('tier-selected');
+    document.getElementById('tier-card-wealth').classList.remove('tier-selected');
+
+    // 2. Beri efek visual pada kartu yang diklik
+    document.getElementById(`tier-card-${tierId}`).classList.add('tier-selected');
+
+    // 3. Ubah link pada tombol Beli via Mayar (baik di atas maupun di bawah)
+    const btnMayarTop = document.querySelector('a[href^="https://trackora.myr.id/app/trackora-"]');
+    const btnMayarBtm = document.getElementById('btn-checkout-mayar');
+    
+    if (btnMayarBtm) btnMayarBtm.href = checkoutLink;
+    
+    // (Opsional) Jika Anda juga ingin mengubah tombol di navbar atas:
+    const btnNavbar = document.querySelector('#navbar .btn-primary');
+    if (btnNavbar) btnNavbar.href = checkoutLink;
+  }
+
+  // Pilih otomatis paket Grow saat pertama kali halaman dimuat
+  document.addEventListener('DOMContentLoaded', () => {
+    selectTier('grow', 'https://trackora.myr.id/app/trackora-grow');
+  });
+  
 </script>
 
 </body>
