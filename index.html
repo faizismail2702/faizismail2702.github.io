@@ -879,7 +879,7 @@
     <div class="grid md:grid-cols-3 gap-6 items-stretch">
 
       <!-- TIER 1: Core -->
-      <div class="card p-7 flex flex-col reveal">
+      <div id="tier-card-core" onclick="selectTier('core', 'https://trackora.myr.id/app/trackora-core')" class="card p-7 flex flex-col reveal cursor-pointer transition-all duration-300 border-2 border-transparent">
         <div class="mb-7">
           <div class="flex items-center justify-between mb-3">
             <p class="text-slate-700 font-bold tracking-wide text-sm uppercase">Core</p>
@@ -925,13 +925,13 @@
           </li>
         </ul>
 
-        <a href="https://trackora.myr.id/app/trackora-webapp-core" class="btn-secondary font-bold py-3.5 rounded-xl text-sm text-center block">
+        <a href="https://trackora.myr.id/app/trackora-core" class="btn-secondary font-bold py-3.5 rounded-xl text-sm text-center block">
           Mulai Paket Core
         </a>
       </div>
 
       <!-- TIER 2: GROW ★ POPULER -->
-      <div class="pricing-popular rounded-3xl p-7 flex flex-col reveal relative md:-mt-3 md:-mb-3">
+      <div id="tier-card-grow" onclick="selectTier('grow', 'https://trackora.myr.id/app/trackora-grow')" class="pricing-popular rounded-3xl p-7 flex flex-col reveal relative md:-mt-3 md:-mb-3 cursor-pointer transition-all duration-300">
         <div class="pill pill-popular absolute -top-3.5 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full uppercase tracking-widest whitespace-nowrap">
           ✦ Paling Populer
         </div>
@@ -977,13 +977,13 @@
           </li>
         </ul>
 
-        <a href="https://trackora.myr.id/app/trackora-financial-webapp-grow" class="btn-primary font-bold py-4 rounded-xl text-sm text-center block">
+        <a href="https://trackora.myr.id/app/trackora-grow" class="btn-primary font-bold py-4 rounded-xl text-sm text-center block">
           Beli Paket Grow <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
         </a>
       </div>
 
       <!-- TIER 3: WORTH -->
-      <div class="card p-7 flex flex-col reveal">
+      <div id="tier-card-wealth" onclick="selectTier('wealth', 'https://trackora.myr.id/app/trackora-wealth')" class="card p-7 flex flex-col reveal cursor-pointer transition-all duration-300 border-2 border-transparent">
         <div class="mb-7">
           <div class="flex items-center gap-2 mb-3">
             <p class="text-slate-700 font-bold tracking-wide text-sm uppercase">Worth</p>
@@ -1022,7 +1022,7 @@
           </li>
         </ul>
 
-        <a href="https://trackora.myr.id/app/wealth-trackora-webapp-wealth-v1-edition" class="btn-secondary font-bold py-3.5 rounded-xl text-sm text-center block">
+        <a href="https://trackora.myr.id/app/trackora-wealth" class="btn-secondary font-bold py-3.5 rounded-xl text-sm text-center block">
           Beli Paket Wealth
         </a>
       </div>
