@@ -106,6 +106,8 @@
            .testi-hover:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(15,23,42,0.06); }
            .browser-frame { background: #fff; border: 1px solid #e2e8f0; border-radius: 1.25rem; box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 12px 24px rgba(15,23,42,0.06), 0 36px 72px -16px rgba(20,184,166,0.18); }
            .tier-selected { border-color: #14b8a6 !important; box-shadow: 0 0 0 4px rgba(20,184,166,0.15) !important; transform: translateY(-4px); }
+           .cta-tier-active { border-color: #14b8a6 !important; background-color: #f0fdfa !important; }
+           .cta-tier-active .tier-title { color: #0f766e !important; }
          }
          /* Scrollbar cantik untuk menu fitur */
           #feat-tabs::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -1266,16 +1268,16 @@
       </div>
 
       <div class="grid grid-cols-3 gap-3 text-center mb-8">
-        <div class="card-soft rounded-xl p-3">
-          <p class="text-slate-700 font-bold text-sm">Core</p>
+        <div id="cta-tier-core" onclick="selectTier('core', 'https://trackora.myr.id/app/trackora-core')" class="card-soft rounded-xl p-3 cursor-pointer transition-all duration-300 border-2 border-transparent hover:border-teal-200">
+          <p class="text-slate-700 font-bold text-sm tier-title transition-colors">Core</p>
           <p class="text-slate-500 text-xs mt-0.5">Rp 89.000</p>
         </div>
-        <div class="card-soft rounded-xl p-3" style="border:1.5px solid #14b8a6;background:#f0fdfa">
-          <p class="text-brand-700 font-bold text-sm">Grow</p>
-          <p class="text-slate-700 text-xs mt-0.5 font-semibold">Rp 199.000</p>
+        <div id="cta-tier-grow" onclick="selectTier('grow', 'https://trackora.myr.id/app/trackora-grow')" class="card-soft rounded-xl p-3 cursor-pointer transition-all duration-300 border-2 border-transparent hover:border-teal-200">
+          <p class="text-slate-700 font-bold text-sm tier-title transition-colors">Grow</p>
+          <p class="text-slate-500 text-xs mt-0.5 font-semibold">Rp 199.000</p>
         </div>
-        <div class="card-soft rounded-xl p-3">
-          <p class="text-slate-700 font-bold text-sm">Wealth</p>
+        <div id="cta-tier-wealth" onclick="selectTier('wealth', 'https://trackora.myr.id/app/trackora-wealth')" class="card-soft rounded-xl p-3 cursor-pointer transition-all duration-300 border-2 border-transparent hover:border-teal-200">
+          <p class="text-slate-700 font-bold text-sm tier-title transition-colors">Wealth</p>
           <p class="text-slate-500 text-xs mt-0.5">Rp 349.000</p>
         </div>
       </div>
@@ -1875,21 +1877,27 @@
   /* =============================================
      TIER SELECTION LOGIC
      ============================================= */
-  function selectTier(tierId, checkoutLink) {
-    // Reset styling
-    document.getElementById('tier-card-core').classList.remove('tier-selected');
-    document.getElementById('tier-card-grow').classList.remove('tier-selected');
-    document.getElementById('tier-card-wealth').classList.remove('tier-selected');
+     function selectTier(tierId, checkoutLink) {
+    ['core', 'grow', 'wealth'].forEach(id => {
+      const card = document.getElementById('tier-card-' + id);
+      if (card) card.classList.remove('tier-selected');
+    });
 
-    // Beri efek pada yang dipilih
-    document.getElementById(`tier-card-${tierId}`).classList.add('tier-selected');
+    const selectedCard = document.getElementById('tier-card-' + tierId);
+    if (selectedCard) selectedCard.classList.add('tier-selected');
 
-    // Ubah link tombol
+    ['core', 'grow', 'wealth'].forEach(id => {
+      const ctaCard = document.getElementById('cta-tier-' + id);
+      if (ctaCard) ctaCard.classList.remove('cta-tier-active');
+    });
+
+    const selectedCta = document.getElementById('cta-tier-' + tierId);
+    if (selectedCta) selectedCta.classList.add('cta-tier-active');
+
     const btnMayarBtm = document.getElementById('btn-checkout-mayar');
     if (btnMayarBtm) btnMayarBtm.href = checkoutLink;
   }
 
-  // Set default saat halaman dimuat
   document.addEventListener('DOMContentLoaded', () => {
     selectTier('grow', 'https://trackora.myr.id/app/trackora-grow');
   });
